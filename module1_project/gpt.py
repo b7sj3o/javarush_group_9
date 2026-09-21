@@ -1,4 +1,3 @@
-import json
 import logging
 
 from openai import (
@@ -20,9 +19,9 @@ client = AsyncOpenAI(
 )
 
 
-
-async def ask(system_prompt: str, user_message: str | None = None) -> list[str] | str | None:
-    messages=[ {"role": "system", "content": system_prompt} ]
+async def ask(system_prompt: str, user_message: str | None = None) -> str | None:
+    """Одиночний запит: системний промпт + (необовʼязково) одне повідомлення."""
+    messages = [ {"role": "system", "content": system_prompt} ]
 
     if user_message:
         messages.append( {"role": "user", "content": user_message} )
@@ -30,8 +29,9 @@ async def ask(system_prompt: str, user_message: str | None = None) -> list[str] 
     return await complete(messages)
 
 
-async def ask_history(system_prompt: str, history: list[dict[str,str]]):
-    messages=[
+async def ask_history(system_prompt: str, history: list[dict[str, str]]) -> str | None:
+    """Запит з історією діалогу: системний промпт + усі попередні репліки."""
+    messages = [
         {
             "role": "system",
             "content": system_prompt
@@ -41,7 +41,8 @@ async def ask_history(system_prompt: str, history: list[dict[str,str]]):
     return await complete(messages)
 
 
-async def complete(messages: list[dict[str,str]]) -> list[str] | str | None:
+async def complete(messages: list[dict[str, str]]) -> str | None:
+    """Повертає текст відповіді або None, якщо модель недоступна чи мовчить."""
     try:
         response = await client.chat.completions.create(
             model=settings.OPENAI_MODEL,
@@ -50,45 +51,30 @@ async def complete(messages: list[dict[str,str]]) -> list[str] | str | None:
             max_completion_tokens=settings.OPENAI_MAX_TOKENS
         )
     except RateLimitError as e:
-        logger.error(
-            "Забагато спроб", e
-        )
+        logger.error("Забагато запитів до OpenAI: %r", e)
         return None
     except APITimeoutError as e:
-        logger.error(
-            "Сервер OpenAI не відповідає.", e
-        )
+        logger.error("Сервер OpenAI не відповідає: %r", e)
         return None
     except APIConnectionError as e:
-        logger.error(
-            "Не вийшло з'єднтаись з OpenAI.", e
-        )
+        logger.error("Не вийшло зʼєднатись з OpenAI: %r", e)
         return None
     except APIStatusError as e:
-        logger.error(
-            "Трапилась помилка", e
-        )
+        logger.error("OpenAI повернув помилку %s: %r", e.status_code, e)
         return None
-    except Exception as e:
-        logger.error(e)
+    except Exception:
+        logger.exception("Невідома помилка при запиті до OpenAI")
         return None
 
-    content = response.choices[0].message.content or ""
+    choice = response.choices[0]
+    content = (choice.message.content or "").strip()
 
     if not content:
-        logger.warning("ChatGPT повернув порожню відповідь")
+        logger.warning(
+            "ChatGPT повернув порожню відповідь: finish_reason=%s, токенів=%s",
+            choice.finish_reason,
+            response.usage.completion_tokens,
+        )
         return None
 
-
-    if len(content) > 4096:
-        result = []
-
-        while content:
-            part = content[:4096]
-            content = content[4096:]
-            result.append(part)
-
-        return result
-
     return content
-
