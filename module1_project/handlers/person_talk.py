@@ -1,20 +1,19 @@
 import logging
 
-from aiogram import Router, F
-from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery, FSInputFile
+from aiogram import F, Router
 from aiogram.filters import Command
-from aiogram.fsm.state import StatesGroup, State
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
+from aiogram.types import CallbackQuery, FSInputFile, Message
 from aiogram.utils.chat_action import ChatActionSender
 
-import keyboards.reply as reply_kb
 import keyboards.inline as inline_kb
-from gpt import ask, ask_history
+import keyboards.reply as reply_kb
+from catalog import FALLBACK, PERSONS
 from config import settings
 from filters import USER_TEXT
-from catalog import QUIZ_TOPICS, FALLBACK, PERSONS
-from utils import load_message, image_path, load_prompt
-
+from gpt import ask_history
+from utils import image_path, load_message, load_prompt
 
 logger = logging.getLogger(__name__)
 router = Router(name="person_talk")
@@ -66,7 +65,7 @@ async def handle_choose_person(
 
 
 @router.message(TalkStates.choosing, USER_TEXT)
-async def handle_text_before_choice(message: Message):
+async def handle_text_before_person(message: Message):
     await message.answer("Спершу обери співрозмовника кнопкою вище 👆")
 
 
@@ -80,7 +79,7 @@ async def handle_text_before_choice(message: Message):
 """
 
 @router.message(TalkStates.dialog, USER_TEXT)
-async def handle_text_after_choice(message: Message, state: FSMContext):
+async def handle_talk_message(message: Message, state: FSMContext):
     data = await state.get_data()
     person = data["person"]
     history = [*data["history"], {"role": "user", "content": message.text}]

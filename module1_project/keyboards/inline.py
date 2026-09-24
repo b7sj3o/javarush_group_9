@@ -2,7 +2,7 @@ from aiogram.filters.callback_data import CallbackData
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from catalog import QUIZ_TOPICS, PERSONS, LANGUAGES, RECOMMEND_CATEGORIES
+from catalog import LANGUAGES, PERSONS, QUIZ_TOPICS, RECOMMEND_CATEGORIES
 
 CB_RANDOM_MORE = "random:more"
 CB_FINISH = "common:finish"

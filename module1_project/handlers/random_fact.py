@@ -1,10 +1,10 @@
 import logging
 import random
 
-from aiogram import Router, F
-from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery, FSInputFile
+from aiogram import F, Router
 from aiogram.filters import Command
+from aiogram.fsm.context import FSMContext
+from aiogram.types import CallbackQuery, FSInputFile, Message
 from aiogram.utils.chat_action import ChatActionSender
 
 import keyboards.reply as reply_kb
@@ -12,7 +12,6 @@ from catalog import FACT_TOPICS, FALLBACK
 from gpt import ask
 from keyboards.inline import CB_RANDOM_MORE, random_fact_kb
 from utils import image_path, load_message, load_prompt
-
 
 router = Router(name="random_fact")
 logger = logging.getLogger(__name__)

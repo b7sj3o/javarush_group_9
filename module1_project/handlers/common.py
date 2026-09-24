@@ -1,13 +1,15 @@
+import json
 import logging
-from aiogram import Router, F
-from aiogram.filters import CommandStart, Command
+
+from aiogram import F, Router
+from aiogram.filters import Command, CommandStart
 from aiogram.fsm.context import FSMContext
-from aiogram.types import FSInputFile, Message, CallbackQuery
+from aiogram.types import CallbackQuery, FSInputFile, Message
 
-import keyboards.reply as reply_kb
 import keyboards.inline as inline_kb
+import keyboards.reply as reply_kb
+from handlers.quiz import get_quiz_summary
 from utils import image_path, load_message
-
 
 router = Router(name="common")
 logger = logging.getLogger(__name__)
@@ -25,6 +27,19 @@ async def show_main_menu(message: Message, state: FSMContext) -> None:
 
 @router.message(CommandStart())
 async def handle_start(message: Message, state: FSMContext):
+    user = message.from_user
+    with open("users.json", "r", encoding="utf-8") as f:
+        users: dict = json.load(f)
+
+    users[user.id] = {
+        "username": user.username,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+    }
+
+    with open("users.json", "w", encoding="utf-8") as f:
+        json.dump(users, f, ensure_ascii=False, indent=4)
+
     logger.info("Користувач %s натиснув /start", message.from_user.id)
 
     await show_main_menu(message, state)
@@ -48,5 +63,11 @@ async def handle_finish(callback: CallbackQuery, state: FSMContext) -> None:
     """Кнопка «Закінчити» — за ТЗ працює так само, як /start."""
     await callback.answer()
     await callback.message.edit_reply_markup(reply_markup=None)
+
+    summary = await get_quiz_summary(state)
+
+    if summary is not None:
+        await callback.message.answer(summary)
+
     await show_main_menu(callback.message, state)
 

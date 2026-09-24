@@ -1,6 +1,6 @@
-import sys
 import asyncio
 import logging
+import sys
 
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
@@ -9,7 +9,8 @@ from aiogram.types import BotCommand
 
 from config import settings
 from handlers import routers
-
+from handlers.errors import handle_error
+from middlewares.throttling import ThrottlingMiddleware
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +46,11 @@ async def main():
     await set_commands(bot)
 
     dp.include_routers(*routers)
+    dp.error.register(handle_error)
+
+    throttling = ThrottlingMiddleware(rate_limit=1.0)
+    dp.message.outer_middleware(throttling)
+    dp.callback_query.outer_middleware(throttling)
 
     print("Запускаємо бота...")
     await dp.start_polling(bot)

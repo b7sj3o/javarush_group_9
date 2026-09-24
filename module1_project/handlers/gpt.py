@@ -1,14 +1,14 @@
 import logging
 
-from aiogram import Router, F
+from aiogram import F, Router
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import StatesGroup, State
-from aiogram.types import Message, FSInputFile
+from aiogram.fsm.state import State, StatesGroup
+from aiogram.types import FSInputFile, Message
 from aiogram.utils.chat_action import ChatActionSender
 
-import keyboards.reply as reply_kb
 import keyboards.inline as inline_kb
+import keyboards.reply as reply_kb
 from catalog import FALLBACK
 from filters import USER_TEXT
 from gpt import ask

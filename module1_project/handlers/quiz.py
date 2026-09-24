@@ -1,19 +1,19 @@
 import logging
 import re
 
-from aiogram import Router, F
-from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery, FSInputFile
+from aiogram import F, Router
 from aiogram.filters import Command
-from aiogram.fsm.state import StatesGroup, State
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
+from aiogram.types import CallbackQuery, FSInputFile, Message
 from aiogram.utils.chat_action import ChatActionSender
 
-import keyboards.reply as reply_kb
 import keyboards.inline as inline_kb
-from catalog import QUIZ_TOPICS, FALLBACK
+import keyboards.reply as reply_kb
+from catalog import FALLBACK, QUIZ_TOPICS
 from filters import USER_TEXT
-from utils import load_message, image_path, load_prompt
 from gpt import ask
+from utils import image_path, load_message, load_prompt
 
 router = Router(name="quiz")
 logger = logging.getLogger(__name__)
@@ -26,6 +26,21 @@ class QuizStates(StatesGroup):
     choosing_topic = State()
     answering = State()
     waiting_next = State()
+
+
+async def get_quiz_summary(state: FSMContext) -> str | None:
+    current_state = await state.get_state()
+
+    if current_state is None or not current_state.startswith(QuizStates.__name__):
+        return None
+
+    data = await state.get_data()
+    total = data.get("total", 0)
+
+    if not total:
+        return None
+
+    return f"🏆 Твій результат: <b>{data.get('score', 0)} з {total}</b>"
 
 
 def parse_verdict(text: str) -> tuple[bool | None, str]:

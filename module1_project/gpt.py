@@ -10,7 +10,6 @@ from openai import (
 
 from config import settings
 
-
 logger = logging.getLogger(__name__)
 
 client = AsyncOpenAI(

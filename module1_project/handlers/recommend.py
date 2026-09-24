@@ -1,20 +1,18 @@
 import logging
 
-from aiogram import Router, F
-from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery, FSInputFile
+from aiogram import F, Router
 from aiogram.filters import Command
-from aiogram.fsm.state import StatesGroup, State
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
+from aiogram.types import CallbackQuery, Message
 from aiogram.utils.chat_action import ChatActionSender
 
-import keyboards.reply as reply_kb
 import keyboards.inline as inline_kb
-from gpt import ask, ask_history
-from config import settings
+import keyboards.reply as reply_kb
+from catalog import FALLBACK, RECOMMEND_CATEGORIES
 from filters import USER_TEXT
-from catalog import QUIZ_TOPICS, FALLBACK, PERSONS, RECOMMEND_CATEGORIES
-from utils import load_message, image_path, load_prompt
-
+from gpt import ask
+from utils import load_message, load_prompt
 
 logger = logging.getLogger(__name__)
 router = Router(name="recommend")
@@ -55,7 +53,7 @@ async def send_recommendation(message: Message, state: FSMContext):
 
 @router.message(Command("recommend"))
 @router.message(F.text == reply_kb.BTN_RECOMMEND)
-async def handle_talk(message: Message, state: FSMContext):
+async def handle_recommend(message: Message, state: FSMContext):
     await state.clear()
     await state.set_state(RecommendStates.choosing_category)
     await message.answer(
@@ -65,7 +63,7 @@ async def handle_talk(message: Message, state: FSMContext):
 
 
 @router.callback_query(inline_kb.CategoryCallback.filter())
-async def handle_choose_person(
+async def handle_choose_category(
         callback: CallbackQuery,
         callback_data: inline_kb.CategoryCallback,
         state: FSMContext
@@ -89,25 +87,33 @@ async def handle_choose_person(
 
 
 @router.message(RecommendStates.choosing_category, USER_TEXT)
-async def handle_text_before_choice(message: Message):
+async def handle_text_before_category(message: Message):
     await message.answer("Спершу обери категорію кнопкою вище 👆")
 
 
 
 @router.message(RecommendStates.preferences, USER_TEXT)
-async def handle_text_after_choice(message: Message, state: FSMContext):
+async def handle_preferences(message: Message, state: FSMContext):
     await state.update_data(preferences=message.text)
     await send_recommendation(message, state)
 
 
 @router.callback_query(F.data == inline_kb.CB_RECOMMEND_DISLIKE)
 async def handle_dislike(callback: CallbackQuery, state: FSMContext):
+    await callback.answer("Гаразд, пошукаю інше")
 
     data = await state.get_data()
-    title = data["last_title"]
-    disliked = data["disliked"]
 
-    await state.update_data(disliked=[*disliked, title])
+    if "preferences" not in data:
+        await callback.message.answer("Підбір уже завершено. Почни заново: /recommend")
+        return
+
+    title = data.get("last_title")
+    disliked = data.get("disliked", [])
+
+    if title and title not in disliked:
+        await state.update_data(disliked=[*disliked, title])
+        logger.info("Користувач %s відкинув %r", callback.from_user.id, title)
 
     await callback.message.edit_reply_markup(reply_markup=None)
     await send_recommendation(callback.message, state)
