@@ -15,7 +15,8 @@
 <style>
 :root{
   --paper:#F1F4FA; --sheet:#FFFFFF; --ink:#15203A; --muted:#5A6885;
-  --blue:#2A66A8; --yellow:#FFD43B; --rule:#D8DFEC; --red:#C8102E;
+  --blue:#2A66A8; --yellow:#FFD43B; --rule:#D8DFEC;
+  --red:#D93644; --red-deep:#BF2B39; /* white on --red: 4.6:1 */
   --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
   --text:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
   --display:"Unbounded","Onest",system-ui,sans-serif;
@@ -60,12 +61,12 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:-3px;border-r
 .title{display:flex;align-items:center;padding:12px 14px;font-weight:500;line-height:1.3}
 .row:hover .num,.row:active .num,.row:focus-visible .num{background-size:100% 100%;color:var(--ink);font-weight:700}
 .row:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
-.has-video{display:grid;grid-template-columns:1fr 30%}
-.video{display:flex;align-items:center;justify-content:center;padding:0 8px;border-left:1px solid var(--rule);
-  color:var(--red);font:600 15px/1 var(--text);text-decoration:none;
-  transition:background-color .16s ease-out,color .16s ease-out}
-.video:hover,.video:active{background:var(--red);color:#fff}
-.video:focus-visible{outline:2px solid var(--red);outline-offset:-2px}
+.has-video{display:grid;grid-template-columns:1fr 25%}
+.video{display:flex;align-items:center;justify-content:center;padding:0 8px;
+  background:var(--red);color:#fff;font:600 15px/1 var(--text);text-decoration:none;
+  transition:background-color .16s ease-out}
+.video:hover,.video:active{background:var(--red-deep)}
+.video:focus-visible{outline:2px solid #fff;outline-offset:-5px}
 
 @media (min-width:700px){
   .wrap{padding-inline:24px}
