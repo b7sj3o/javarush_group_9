@@ -1,0 +1,66 @@
+2026-10-22 20:57:42,509 - scraper - INFO - Scraper started
+2026-10-22 20:57:42,510 - scraper - INFO - Creating chrome driver with params: headless=False
+2026-10-22 20:57:49,383 - scraper - INFO - Chrome driver created, Chrome 155.0.8059.85
+2026-10-22 20:57:49,388 - scraper - INFO - Processing page 1: https://books.toscrape.com/catalogue/page-1.html
+2026-10-22 20:57:49,393 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-1.html...
+2026-10-22 20:57:52,456 - scraper - INFO - Collected 20 from page 1
+2026-10-22 20:57:52,598 - scraper - INFO - Processing page 2: https://books.toscrape.com/catalogue/page-2.html
+2026-10-22 20:57:52,598 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-2.html...
+2026-10-22 20:57:54,493 - scraper - INFO - Collected 20 from page 2
+2026-10-22 20:57:54,503 - scraper - INFO - Processing page 3: https://books.toscrape.com/catalogue/page-3.html
+2026-10-22 20:57:54,503 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-3.html...
+2026-10-22 20:57:57,170 - scraper - INFO - Collected 20 from page 3
+2026-10-22 20:57:57,187 - scraper - INFO - Processing page 4: https://books.toscrape.com/catalogue/page-4.html
+2026-10-22 20:57:57,187 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-4.html...
+2026-10-22 20:57:59,309 - scraper - INFO - Collected 20 from page 4
+2026-10-22 20:57:59,322 - scraper - INFO - Processing page 5: https://books.toscrape.com/catalogue/page-5.html
+2026-10-22 20:57:59,322 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-5.html...
+2026-10-22 20:58:01,395 - scraper - INFO - Collected 20 from page 5
+2026-10-22 20:58:01,414 - scraper - INFO - Processing page 6: https://books.toscrape.com/catalogue/page-6.html
+2026-10-22 20:58:01,415 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-6.html...
+2026-10-22 20:58:03,756 - scraper - INFO - Collected 20 from page 6
+2026-10-22 20:58:03,769 - scraper - INFO - Processing page 7: https://books.toscrape.com/catalogue/page-7.html
+2026-10-22 20:58:03,769 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-7.html...
+2026-10-22 20:58:03,834 - scraper - INFO - Closing browser
+2026-10-22 20:58:13,618 - scraper - INFO - Scraper started
+2026-10-22 20:58:13,618 - scraper - INFO - Creating chrome driver with params: headless=False
+2026-10-22 20:58:14,266 - scraper - INFO - Chrome driver created, Chrome 155.0.8059.85
+2026-10-22 20:58:14,267 - scraper - INFO - Processing page 1: https://books.toscrape.com/catalogue/page-40.html
+2026-10-22 20:58:14,268 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-40.html...
+2026-10-22 20:58:16,961 - scraper - INFO - Collected 20 from page 1
+2026-10-22 20:58:16,973 - scraper - INFO - Processing page 2: https://books.toscrape.com/catalogue/page-41.html
+2026-10-22 20:58:16,973 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-41.html...
+2026-10-22 20:58:19,661 - scraper - INFO - Collected 20 from page 2
+2026-10-22 20:58:19,708 - scraper - INFO - Processing page 3: https://books.toscrape.com/catalogue/page-42.html
+2026-10-22 20:58:19,708 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-42.html...
+2026-10-22 20:58:21,856 - scraper - INFO - Collected 20 from page 3
+2026-10-22 20:58:21,871 - scraper - INFO - Processing page 4: https://books.toscrape.com/catalogue/page-43.html
+2026-10-22 20:58:21,871 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-43.html...
+2026-10-22 20:58:23,854 - scraper - INFO - Collected 20 from page 4
+2026-10-22 20:58:23,866 - scraper - INFO - Processing page 5: https://books.toscrape.com/catalogue/page-44.html
+2026-10-22 20:58:23,866 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-44.html...
+2026-10-22 20:58:25,974 - scraper - INFO - Collected 20 from page 5
+2026-10-22 20:58:25,983 - scraper - INFO - Processing page 6: https://books.toscrape.com/catalogue/page-45.html
+2026-10-22 20:58:25,983 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-45.html...
+2026-10-22 20:58:28,171 - scraper - INFO - Collected 20 from page 6
+2026-10-22 20:58:28,184 - scraper - INFO - Processing page 7: https://books.toscrape.com/catalogue/page-46.html
+2026-10-22 20:58:28,184 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-46.html...
+2026-10-22 20:58:31,424 - scraper - INFO - Collected 20 from page 7
+2026-10-22 20:58:31,436 - scraper - INFO - Processing page 8: https://books.toscrape.com/catalogue/page-47.html
+2026-10-22 20:58:31,436 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-47.html...
+2026-10-22 20:58:33,807 - scraper - INFO - Collected 20 from page 8
+2026-10-22 20:58:33,820 - scraper - INFO - Processing page 9: https://books.toscrape.com/catalogue/page-48.html
+2026-10-22 20:58:33,820 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-48.html...
+2026-10-22 20:58:36,150 - scraper - INFO - Collected 20 from page 9
+2026-10-22 20:58:36,162 - scraper - INFO - Processing page 10: https://books.toscrape.com/catalogue/page-49.html
+2026-10-22 20:58:36,163 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-49.html...
+2026-10-22 20:58:38,253 - scraper - INFO - Collected 20 from page 10
+2026-10-22 20:58:38,261 - scraper - INFO - Processing page 11: https://books.toscrape.com/catalogue/page-50.html
+2026-10-22 20:58:38,261 - scraper - INFO - Opening https://books.toscrape.com/catalogue/page-50.html...
+2026-10-22 20:58:40,358 - scraper - INFO - Collected 20 from page 11
+2026-10-22 20:58:40,362 - scraper - WARNING - There is no next page url
+2026-10-22 20:58:40,362 - scraper - INFO - Pagination completed. Total books collected: 220. Total pages: 12
+2026-10-22 20:58:40,362 - scraper - INFO - Exporting 220 books to 'books_data.csv'.
+2026-10-22 20:58:40,366 - scraper - INFO - CSV export completed.
+2026-10-22 20:58:40,366 - scraper - INFO - Closing browser
+2026-10-22 20:58:42,620 - scraper - INFO - Browser closed
