@@ -1,0 +1,24 @@
+name: demo
+
+services:
+  frontend:
+    image: nginx:alpine
+    networks:
+      - frontend-network
+
+  backend:
+    image: nginx:alpine
+    networks:
+      - frontend-network
+      - backend-network
+
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_PASSWORD: demo
+    networks:
+      - backend-network
+
+networks:
+  frontend-network:
+  backend-network:
